@@ -4,7 +4,7 @@ struct Node
 {
     int data;
     struct Node* next;
-}*first,*last;
+}*head, *last;
 
 void InsertLast(int data);
 void Insert(int pos,int data);
@@ -66,9 +66,9 @@ void InsertLast(int data)
     t = (struct Node*)malloc(sizeof(struct Node));
     t->data = data;
     t->next = NULL;
-    if(first==NULL)
+    if(head==NULL)
     {
-        first = t;
+        head = t;
         last = t;
     }
     else
@@ -87,12 +87,12 @@ void Insert(int pos,int data)
     {
         t= (struct Node *)malloc(sizeof(struct Node));
         t->data=data;
-        t->next = first;
-        first = t;
+        t->next = head;
+        head = t;
     }
     else if(pos>0)
     {
-        p = first;
+        p = head;
         for(i=0;i<pos-1&&p;i++)
         {
             p=p->next;
@@ -111,7 +111,7 @@ void Insert(int pos,int data)
 void display()
 {
     struct Node *p;
-    p = first;
+    p = head;
     while(p!=NULL)
     {
         printf("%d\t",p->data);
@@ -124,7 +124,7 @@ int NodeCount()
 {
     struct Node *p;
     int c = 0;
-    p = first;
+    p = head;
     while(p)
     {
         c++;
@@ -139,7 +139,7 @@ int NodeSum()
 {
     struct Node *p;
     int sum = 0;
-    p=first;
+    p=head;
 
     while(p)
     {
@@ -154,10 +154,10 @@ int Delete(int pos)
 {
     struct Node *p, *q;
     int i,x;
-    p = first;
+    p = head;
     if(pos == 0)
     {
-        first = first->next;
+        head = head->next;
         x = p->data;
         free(p);
     }
@@ -179,7 +179,7 @@ int Delete(int pos)
 void Reverse()
 {
     struct Node *p, *q=NULL, *r=NULL;
-    p=first;
+    p=head;
     while(p)
     {
         r=q;
@@ -187,13 +187,13 @@ void Reverse()
         p=p->next;
         q->next = r;
     }
-    first = q;
+    head = q;
 }
 
 ///Similar to this you can create min function
 int NodeMax()
 {
-    struct Node *p = first;
+    struct Node *p = head;
     int m = -32768;
     while(p)
     {
