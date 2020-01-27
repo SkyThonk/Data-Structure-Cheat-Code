@@ -117,3 +117,4 @@ int peek(struct Stack st, int pos)
         x = st.s[st.top - pos +1];
     return x;
 }
+//test
