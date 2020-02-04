@@ -68,6 +68,10 @@ int main()
             printf("\nTotal Number of Nodes: %d", NodeCount(head));
             break;
         }
+        default:
+        {
+            printf("\nInvalid Input");
+        }
         }
 
     } while (f != 0);

@@ -82,6 +82,10 @@ int main()
             f = 0;
             break;
         }
+        default:
+        {
+            printf("\nInvalid Input");
+        }
         }
 
     } while (f);
