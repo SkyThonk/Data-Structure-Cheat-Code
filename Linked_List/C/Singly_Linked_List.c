@@ -1,131 +1,174 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 struct Node
 {
     int data;
-    struct Node* next;
-}*head, *last;
+    struct Node *next;
+};
 
-void InsertLast(int data);
-void Insert(int pos,int data);
-void display();
-int NodeCount();
+struct Node *InsertTop(struct Node *head, int data);
+struct Node *InsertLast(struct Node *head, int data);
+struct Node *InsertPos(struct Node *head, int pos, int data);
+void Display(struct Node *head);
+int NodeCount(struct Node *head);
+/*
 int NodeSum();
 int Delete(int pos);
 void Reverse();
-int NodeMax();
+int NodeMax();*/
 
 int main()
 {
-    int nc,nsum,dn;
+    int f = 1, num, data, pos;
+    struct Node *head;
+    head = NULL;
 
-    InsertLast(1);
-    InsertLast(2);
-    InsertLast(3);
-    InsertLast(4);
-    InsertLast(5);
-    display();
+    do
+    {
+        printf("\n\n===============================================================\n");
+        printf("|| 1 -> For Insert node at top of a linked list\n");
+        printf("|| 2 -> For Insert node at last of a linked list\n");
+        printf("|| 3 -> For Insert node at given position of a linked list\n");
+        printf("|| 4 -> For Display linked list\n");
+        printf("|| 5 -> For Counting the number of linked list node\n");
+        printf("===============================================================");
+        printf("\nEnter your choice: ");
+        scanf("%d", &num);
+        switch (num)
+        {
+        case 1:
+        {
+            printf("\nEnter the data for linked list node: ");
+            scanf("%d", &data);
+            head = InsertTop(head, data);
+            break;
+        }
+        case 2:
+        {
+            printf("\nEnter the data for linked list node: ");
+            scanf("%d", &data);
+            head = InsertLast(head, data);
+            break;
+        }
+        case 3:
+        {
+            printf("\nEnter the data and position for linked list node: \n");
+            scanf("%d", &data);
+            scanf("%d", &pos);
+            head = InsertPos(head, data, pos);
+            break;
+        }
+        case 4:
+        {
+            Display(head);
+            break;
+        }
+        case 5:
+        {
+            printf("\nTotal Number of Nodes: %d", NodeCount(head));
+            break;
+        }
+        }
 
-    printf("\n");
+    } while (f != 0);
 
-    Insert(2,24);
-    Insert(5,121);
-    Insert(0,11);
-    display();
-
-    printf("\n");
-
-    nc = NodeCount();
-    printf("\nTotal Numbers of node: %d\n",nc);
-
-    printf("\n\n");
-
-    nsum = NodeSum();
-    printf("Total sum of each node: %d\n",nsum);
-
-    printf("\n\n");
-
-    dn = Delete(3);
-    printf("Deleted Node: %d\n",dn);
-    printf("After Delete: ");
-    display();
-
-    printf("\n\nAfter Reverse: ");
-    Reverse();
-    display();
-
-    printf("\n\n");
-    printf("Max Number is Linked List: %d",NodeMax());
     return 0;
 }
 
-///Insertion in a linked list at last position
-void InsertLast(int data)
+struct Node *InsertTop(struct Node *head, int data)
 {
     struct Node *t;
-    t = (struct Node*)malloc(sizeof(struct Node));
+    t = (struct Node *)malloc(sizeof(struct Node));
     t->data = data;
-    t->next = NULL;
-    if(head==NULL)
+    if (head == NULL)
     {
         head = t;
-        last = t;
+        t->next = NULL;
     }
     else
     {
-        last->next=t;
-        last=t;
-    }
-}
-
-///Insertion in a linked node at any given position
-void Insert(int pos,int data)
-{
-    int i;
-    struct Node *p, *t;
-    if(pos==0)
-    {
-        t= (struct Node *)malloc(sizeof(struct Node));
-        t->data=data;
         t->next = head;
         head = t;
     }
-    else if(pos>0)
+
+    return head;
+}
+
+///Insertion in a linked list at last position
+struct Node *InsertLast(struct Node *head, int data)
+{
+    struct Node *t, *p;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = data;
+    t->next = NULL;
+    if (head == NULL)
+    {
+        head = t;
+    }
+    else
     {
         p = head;
-        for(i=0;i<pos-1&&p;i++)
+        while (p->next != NULL)
         {
-            p=p->next;
+            p = p->next;
         }
-        if(p)
-        {
-        t= (struct Node *)malloc(sizeof(struct Node));
-        t->data=data;
-        t->next = p->next;
-        p->next=t;
-        }
+        p->next = t;
     }
+
+    return head;
+}
+
+///Insertion in a linked node at any given position
+struct Node *InsertPos(struct Node *head, int pos, int data)
+{
+    int i;
+    struct Node *p, *t;
+    t = (struct Node *)malloc(sizeof(struct Node));
+    t->data = data;
+    if (pos <= 0)
+    {
+        printf("\nInvalid Position");
+        return head;
+    }
+    else if (pos == 1)
+    {
+        t->next = head;
+        head = t;
+    }
+    else
+    {
+        p = head;
+        for (i = 1; i < pos - 1 && p->next; i++)
+        {
+            p = p->next;
+        }
+        t->next = p->next;
+        p->next = t;
+    }
+
+    return head;
 }
 
 ///function for displaying nodes
-void display()
+void Display(struct Node *head)
 {
     struct Node *p;
     p = head;
-    while(p!=NULL)
+    printf("\nDisplay:  ");
+    while (p != NULL)
     {
-        printf("%d\t",p->data);
+        printf("%d\t", p->data);
         p = p->next;
     }
 }
 
 ///function for counting the numbers of nodes on a linked list
-int NodeCount()
+int NodeCount(struct Node *head)
 {
     struct Node *p;
     int c = 0;
     p = head;
-    while(p)
+    while (p)
     {
         c++;
         p = p->next;
@@ -133,7 +176,7 @@ int NodeCount()
 
     return c;
 }
-
+/*
 ///function for doing sum of each node
 int NodeSum()
 {
@@ -204,3 +247,4 @@ int NodeMax()
 
     return m;
 }
+*/
