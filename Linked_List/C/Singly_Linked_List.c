@@ -11,6 +11,7 @@ struct Node *InsertLast(struct Node *head, int data);
 struct Node *InsertPos(struct Node *head, int pos, int data);
 void Display(struct Node *head);
 int NodeCount(struct Node *head);
+int NodeSearch(struct Node *head, int key);
 /*
 int NodeSum();
 int Delete(int pos);
@@ -31,6 +32,7 @@ int main()
         printf("|| 3 -> For Insert node at given position of a linked list\n");
         printf("|| 4 -> For Display linked list\n");
         printf("|| 5 -> For Counting the number of linked list node\n");
+        printf("|| 6 -> For Searching node in linked list\n");
         printf("===============================================================");
         printf("\nEnter your choice: ");
         scanf("%d", &num);
@@ -68,9 +70,17 @@ int main()
             printf("\nTotal Number of Nodes: %d", NodeCount(head));
             break;
         }
+        case 6:
+            {
+                printf("\nEnter the Element for Searching: ");
+                scanf("%d",&data);
+                printf("\nFound Element at position: %d",NodeSearch(head,data));
+                break;
+            }
         default:
         {
             printf("\nInvalid Input");
+            break;
         }
         }
 
@@ -179,6 +189,23 @@ int NodeCount(struct Node *head)
     }
 
     return c;
+}
+
+int NodeSearch(struct Node *head, int key)
+{
+    struct Node *p = head;
+    int k=0,find = 0;
+    while(p!=0)
+    {
+        if(key == p->data)
+        {
+            k = find++;
+            break;
+        }
+        find++;
+        p = p->next;
+    }
+    return k;
 }
 /*
 ///function for doing sum of each node
